@@ -343,10 +343,13 @@ public class RNGooglePlacesModule extends ReactContextBaseJavaModule implements 
 
                 for (PlaceLikelihood placeLikelihood : response.getPlaceLikelihoods()) {
 
-                    WritableMap map = propertiesMapForPlace(placeLikelihood.getPlace(), selectedFields);
-                    map.putDouble("likelihood", placeLikelihood.getLikelihood());
-
-                    likelyPlacesList.pushMap(map);
+                    try {
+                        WritableMap map = propertiesMapForPlace(placeLikelihood.getPlace(), selectedFields);
+                        map.putDouble("likelihood", placeLikelihood.getLikelihood());
+                        likelyPlacesList.pushMap(map);
+                    } catch (Exception e) {
+                        // pass
+                    }
                 }
 
                 promise.resolve(likelyPlacesList);
